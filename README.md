@@ -3,3 +3,5 @@
 2. 
     2.1: I added a border to description and type to make them easier to distinguish
     2.2: I added a chrome dino image for sites without meta image data to tell a user that the website isn't broken, but image was just not returned
+3. Heroku link: https://hidden-dawn-62502.herokuapp.com/
+4. Work by Joon Chang
