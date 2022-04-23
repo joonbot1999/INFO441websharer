@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node app.js"
+  },"engines": {
+    "node": "~14"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
