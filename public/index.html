@@ -9,7 +9,7 @@
   <script src="javascripts/index.js"></script>
 </head>
 
-<body onload="init()">
+<body onload="init()" id="mainbody">
   <nav class="navbar navbar-light bg-light">
     <div id="errorInfo" class="alert alert-danger fade show" role="alert" style="opacity:0"></div>
     <div id="identity_div"></div>
@@ -22,7 +22,43 @@
   <h2>Post new website:</h2>
   <p>Enter a description of your post (e.g., your reason for sharing)</p>
   <input type="text" id="descriptionInput"/>
+  <br>
   <p>Enter the website url</p><input type="text" id="urlInput" />
+  <br>
+  <p>Select the content type</p>
+  <div id="radioID">
+    <input type="radio" id="typeChoice1"
+     name="contact" value="blog">
+    <label for="typeChoice1">Blog</label>
+
+    <input type="radio" id="typeChoice2"
+     name="contact" value="video">
+    <label for="typeChoice2">Video</label>
+
+    <input type="radio" id="typeChoice3"
+     name="contact" value="music">
+    <label for="typeChoice3">Music</label>
+
+    <input type="radio" id="typeChoice4"
+    name="contact" value="article">
+    <label for="typeChoice4">Article</label>
+
+    <input type="radio" id="typeChoice5"
+    name="contact" value="podcast">
+    <label for="typeChoice5">Podcast</label>
+
+    <input type="radio" id="typeChoice6"
+    name="contact" value="socialmedia">
+    <label for="typeChoice6">Social media</label>
+
+    <input type="radio" id="typeChoice7"
+    name="contact" value="forum">
+    <label for="typeChoice7">Forum</label>
+
+    <input type="radio" id="typeChoice8"
+    name="contact" value="other">
+    <label for="typeChoice8">Other</label>
+  </div>
   <button onclick="postUrl()">Post</button> <span id="postStatus"></span>
   <div id="url_previews"></div>
 </body>

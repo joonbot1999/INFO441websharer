@@ -9,32 +9,54 @@ function init(){
 async function loadPosts(){
     document.getElementById("posts_box").innerText = "Loading...";
     let postsJson = await fetchJSON(`api/${apiVersion}/posts`)
-    
     let postsHtml = postsJson.map(postInfo => {
-        return `<div class="post">${postInfo.description}${postInfo.htmlPreview}</div>`
+        console.log(postInfo.contentType)
+        return `<div class="post" style="box-shadow: 5px 10px; background-color: white; font-family: Koldby;">
+                    <div style="background-color: #FFFBE6;">
+                        <div style="text-align: center; margin:0 auto;">
+                            <p>User submitted description: ${postInfo.description}</p>
+                        </div>
+                        <br>
+                        <div style="text-align: center; margin:0 auto;">
+                            <p>User submitted content type: ${postInfo.contentType}</p>
+                        </div>
+                    </div>
+                    ${postInfo.htmlPreview}
+                </div>`
     }).join("\n");
     document.getElementById("posts_box").innerHTML = postsHtml;
 }
 
 async function postUrl(){
-    document.getElementById("postStatus").innerHTML = "sending data..."
     let url = document.getElementById("urlInput").value;
     let description = document.getElementById("descriptionInput").value;
-
-    try{
-        await fetchJSON(`api/${apiVersion}/posts`, {
-            method: "POST",
-            body: {url: url, description: description}
-        })
-    }catch(error){
-        document.getElementById("postStatus").innerText = "Error"
-        throw(error)
+    let radioContent = document.getElementById("radioID")
+    let contentTypeRadio = ""
+    if (url == "" || description == "") {
+        alert("None of the fields must be empty!")
+    } else {
+        document.getElementById("postStatus").innerHTML = "sending data..."
+        for (let i = 0; i < radioContent.children.length; i++) {
+            if (radioContent.children[i].checked) {
+                contentTypeRadio = radioContent.children[i + 1].innerText
+            }
+        }
+        console.log(contentTypeRadio)
+        try{
+            await fetchJSON(`api/${apiVersion}/posts`, {
+                method: "POST",
+                body: {url: url, description: description, type: contentTypeRadio}
+            })
+        }catch(error){
+            document.getElementById("postStatus").innerText = "Error"
+            throw(error)
+        }
+        document.getElementById("urlInput").value = "";
+        document.getElementById("descriptionInput").value = "";
+        document.getElementById("url_previews").innerHTML = "";
+        document.getElementById("postStatus").innerHTML = "successfully uploaded"
+        loadPosts();
     }
-    document.getElementById("urlInput").value = "";
-    document.getElementById("descriptionInput").value = "";
-    document.getElementById("url_previews").innerHTML = "";
-    document.getElementById("postStatus").innerHTML = "successfully uploaded"
-    loadPosts();
 }
 
 

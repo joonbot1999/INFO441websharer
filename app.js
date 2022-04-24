@@ -3,9 +3,11 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
+import models from './models.js'
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
-import apiRouter from './routes/api/v1/apiv1.js'
+//import apiRouter from './routes/api/v1/apiv1.js'
+import apiV2Router from './routes/api/v2/apiv2.js'
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -21,9 +23,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+  // makes a models step
+  req.models = models
+  next()
+})
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/api/v1', apiRouter)
+app.use('/users', usersRouter)
+//app.use('/api/v1', apiRouter)
+app.use('/api/v2', apiV2Router)
 
 export default app;
 
