@@ -1,7 +1,11 @@
-1. URL to test: https://www.youtube.com/watch?v=Qskm9MTz2V4
-    1.1 I added a type component to identify the type of content returned by the url
-2. 
-    2.1: I added a border to description and type to make them easier to distinguish
-    2.2: I added a chrome dino image for sites without meta image data to tell a user that the website isn't broken, but image was just not returned
-3. Heroku link: https://hidden-dawn-62502.herokuapp.com/
-4. Work by Joon Chang
+1. Edits
+    1.1 used a different font for user input information
+    1.2 prevents users from submitting empty form
+    1.3 more vibrant color
+    1.4 shadow for card elements
+2. Heroku link: 
+3. Additional information
+    1.1 added radio buttons for user submitted content type for content accuracy
+    1.2 made content_type for mongodb
+    1.3 the client side reads this as 'type'
+4. Additional help: none
