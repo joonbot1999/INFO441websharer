@@ -9,3 +9,4 @@
     1.2 made content_type for mongodb
     1.3 the client side reads this as 'type'
 4. Additional help: none
+5. Azure link: https://www.nooneknowswhattheyredoing.me/

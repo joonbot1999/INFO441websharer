@@ -35,7 +35,7 @@ router.get('/', async function (req, res, next) {
         }
         urlJSONArr.push(urlJSON)
     }
-    console.log(urlJSONArr)
+    //console.log(urlJSONArr)
     res.type('array')
     res.send(urlJSONArr)
   } catch(error) {

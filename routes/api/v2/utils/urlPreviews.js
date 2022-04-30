@@ -1,6 +1,14 @@
 import fetch from 'node-fetch';
-
 import parser from 'node-html-parser';
+
+const escapeHTML = str => str.replace(/[&<>'"]/g, 
+  tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag]));
 
 async function getURLPreview(url){
   // TODO: Copy from your code for making url previews in A2 to make this 
@@ -29,6 +37,7 @@ async function getURLPreview(url){
         let image = htmlData.querySelector("meta[property='og:image']")
         let title = htmlData.querySelector("meta[property='og:title']")
         let contentType = htmlData.querySelector("meta[property='og:type']")
+        console.log(escapeHTML(description.getAttribute('content')))
         let urlTag = ""
         let descTag = ""
         let imageTag = ""
@@ -45,7 +54,7 @@ async function getURLPreview(url){
             imageTag = "<img src=https://art.pixilart.com/d8a5d6f1f1f432a.png style=\"max-height: 200px; max-width: 270px;\" alt=\"image not found\">"
         }
         if (description != null) {
-            descTag = "<p style=\"border:orange; border-width:5px; border-style:solid;\">" + description.getAttribute('content') + "</p>" 
+            descTag = "<p style=\"border:orange; border-width:5px; border-style:solid;\">" + escapeHTML(description.getAttribute('content')) + "</p>" 
         }
         if (title == null) {
             if (htmlData.getElementsByTagName('title')[0] == null) {
