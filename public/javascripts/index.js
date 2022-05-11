@@ -1,63 +1,42 @@
-function init(){
+async function init(){
     let urlInput = document.getElementById("urlInput");
     urlInput.onkeyup = previewUrl;
     urlInput.onchange = previewUrl;
     urlInput.onclick = previewUrl;
+
+    await loadIdentity();
     loadPosts();
 }
 
 async function loadPosts(){
     document.getElementById("posts_box").innerText = "Loading...";
     let postsJson = await fetchJSON(`api/${apiVersion}/posts`)
-    let postsHtml = postsJson.map(postInfo => {
-        console.log(postInfo.contentType)
-        return `<div class="post" style="box-shadow: 5px 10px; background-color: white; font-family: Koldby;">
-                    <div style="background-color: #FFFBE6;">
-                        <div style="text-align: center; margin:0 auto;">
-                            <p>User submitted description: ${postInfo.description}</p>
-                        </div>
-                        <br>
-                        <div style="text-align: center; margin:0 auto;">
-                            <p>User submitted content type: ${postInfo.contentType}</p>
-                        </div>
-                    </div>
-                    ${postInfo.htmlPreview}
-                </div>`
-    }).join("\n");
+    let postsHtml = createPostsHtml(postsJson)
     document.getElementById("posts_box").innerHTML = postsHtml;
 }
 
 async function postUrl(){
+    document.getElementById("postStatus").innerHTML = "sending data..."
     let url = document.getElementById("urlInput").value;
     let description = document.getElementById("descriptionInput").value;
-    let radioContent = document.getElementById("radioID")
-    let contentTypeRadio = ""
-    if (url == "" || description == "") {
-        alert("None of the fields must be empty!")
-    } else {
-        document.getElementById("postStatus").innerHTML = "sending data..."
-        for (let i = 0; i < radioContent.children.length; i++) {
-            if (radioContent.children[i].checked) {
-                contentTypeRadio = radioContent.children[i + 1].innerText
-            }
-        }
-        console.log(contentTypeRadio)
-        try{
-            await fetchJSON(`api/${apiVersion}/posts`, {
-                method: "POST",
-                body: {url: url, description: description, type: contentTypeRadio}
-            })
-        }catch(error){
-            document.getElementById("postStatus").innerText = "Error"
-            throw(error)
-        }
-        document.getElementById("urlInput").value = "";
-        document.getElementById("descriptionInput").value = "";
-        document.getElementById("url_previews").innerHTML = "";
-        document.getElementById("postStatus").innerHTML = "successfully uploaded"
-        loadPosts();
+
+    try{
+        await fetchJSON(`api/${apiVersion}/posts`, {
+            method: "POST",
+            body: {url: url, description: description}
+        })
+    }catch(error){
+        document.getElementById("postStatus").innerText = "Error"
+        throw(error)
     }
+    document.getElementById("urlInput").value = "";
+    document.getElementById("descriptionInput").value = "";
+    document.getElementById("url_previews").innerHTML = "";
+    document.getElementById("postStatus").innerText = "successfully uploaded"
+    loadPosts();
+    
 }
+
 
 
 let lastTypedUrl = ""
@@ -89,7 +68,7 @@ async function previewUrl(){
             lastURLPreviewed = url; // mark this url as one we are previewing
             document.getElementById("url_previews").innerHTML = "Loading preview..."
             try{
-                let response = await fetch(`api/${apiVersion}/urls/preview?url=` + url)
+                let response = await fetch(`api/${apiVersion}/urls/preview?url=` + encodeURIComponent(url))
                 let previewHtml = await response.text()
                 if(url == lastURLPreviewed){
                     document.getElementById("url_previews").innerHTML = previewHtml;
@@ -100,4 +79,3 @@ async function previewUrl(){
         }
     }
 }
-
