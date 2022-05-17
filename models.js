@@ -12,11 +12,21 @@ async function main() {
         url: String,
         description: String,
         username: String,
+        likes: Array,
         created_date: Date,
     })
     // makes a User piece
     models.Post = mongoose.model('Post', postSchema)
-    console.log('mongoose model created')
+
+    const commentSchema = new mongoose.Schema({
+        username: String,
+        comment: String,
+        post: String,
+        created_date: Date
+    })
+    models.Comment = mongoose.model("Comment", commentSchema)
+
+    console.log('mongoose models for post and comment created')
 }
 
 export default models;
