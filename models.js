@@ -26,6 +26,13 @@ async function main() {
     })
     models.Comment = mongoose.model("Comment", commentSchema)
 
+    const youtuberSchema = new mongoose.Schema({
+        username: String,
+        youtuber: String,
+        youtuber_name: String
+    })
+    models.Userinfo = mongoose.model("Userinfo", youtuberSchema)
+
     console.log('mongoose models for post and comment created')
 }
 

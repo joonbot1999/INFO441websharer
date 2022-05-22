@@ -35,6 +35,7 @@ router.post('/like', async function (req, res, next) {
   if (session.isAuthenticated) {
     try {
       let likePost = await req.models.Post.findById(postId)
+      console.log(likePost)
       if (!likePost.likes.includes(session.account.username)) {
         likePost.likes.push(session.account.username)
       }

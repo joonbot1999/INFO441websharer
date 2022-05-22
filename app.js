@@ -14,7 +14,7 @@ const appSettings = {
     	clientSecret:  "lo28Q~W1gVp261rOm.-joXC_fng~Xmzqco7LKccg"
 	},
 	authRoutes: {
-    	redirect: "https://www.nooneknowswhattheyredoing.me/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
+    	redirect: "https://www.nooneknowswhattheyredoing.me/redirect", 
     	error: "/error", // the wrapper will redirect to this route in case of any error.
     	unauthorized: "/unauthorized" // the wrapper will redirect to this route in case of unauthorized access attempt.
 	}

@@ -44,3 +44,11 @@ a {
   border: 1px black solid;
   margin: 3px;
 }
+
+#youtube-contents {
+  display: flex;
+}
+
+.images {
+  min-width: 300px;
+}
